@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .details-view-table tr td {
+            padding: 5px 30px 5px 10px;
+        }
+
+        .details-container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .details-container > div {
+            padding-right: 100px;
+        }
+    </style>
+</head>
+<body>
+    <a href="/"><i class="w3-large fa fa-2x fa-home"></i></a>
+    <br>
+    <h1 id="name"></h1>
+
+    <div class="details-container">
+        <div>
+            <table class="details-view-table">
+                <tr>
+                    <td><b>Hersteller</b></td>
+                    <td id="manufacturer"></td>
+                </tr>
+                <tr>
+                    <td><b>Displaygröße</b></td>
+                    <td id="displaySizeInInches"></td>
+                </tr>
+                <tr>
+                    <td><b>Auflösung</b></td>
+                    <td id="resolution"></td>
+                </tr>
+                <tr>
+                    <td><b>Gewicht</b></td>
+                    <td id="weightInGram"></td>
+                </tr>
+                <tr>
+                    <td><b>Prozessor</b></td>
+                    <td id="processorName"></td>
+                </tr>
+                <tr>
+                    <td><b>Preiskategory</b></td>
+                    <td id="priceCategory"></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <img height="250" id="backPictureName">
+            <img height="250" id="frontPictureName">
+        </div>
+    </div>
+        <br>
+        <h2>Beschreibung:</h2>
+        <p id="description"></p>
+
+
+<script type="module">
+    import {findById} from './dao.js';
+
+    let urlParams = new URLSearchParams(window.location.search);
+    let id = urlParams.get('id');
+    findById(id).then(details => {
+        document.getElementById('name').innerHTML = details.name;
+        document.getElementById('manufacturer').innerHTML = details.manufacturer;
+        document.getElementById('displaySizeInInches').innerHTML = details.displaySizeInInches;
+        document.getElementById('resolution').innerHTML = `${details.resolutionXInPixel} x ${details.resolutionYInPixel}`;
+        document.getElementById('weightInGram').innerHTML = details.weightInGram + 'g';
+        document.getElementById('priceCategory').innerHTML = getCategoryText(details.priceCategory) ;
+        document.getElementById('processorName').innerHTML = details.processorName;
+        document.getElementById('description').innerHTML = details.description? details.description : '-';
+        document.getElementById('backPictureName').src = "data:image/png;base64," +  details.frontPictureName;
+        document.getElementById('frontPictureName').src = "data:image/png;base64," +  details.backPictureName;
+
+    });
+
+    function getCategoryText(priceCategory) {
+        switch(priceCategory) {
+        case 'STARTER_MODEL':
+            return 'starter model';
+        case 'NORMAL':
+            return 'normal';
+        case 'HIGH_END':
+            return 'high end';
+        }
+    }
+
+</script>
+</body>
+</html>

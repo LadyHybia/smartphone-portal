@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input onkeyup="render()" type="text" id="searchField" placeholder="Search">
+
+<select id="priceCategory" onchange="render()">
+    <option>all price categories</option>
+    <option>starter model</option>
+    <option>normal</option>
+    <option>high end</option>
+</select>
+
+<script type="module" src="renderer.js"></script>
+<script type="module" src="dao.js"></script>
+<script type="module" src="detailViewGenerator.js"></script>
+</body>
+</html>

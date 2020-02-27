@@ -1,0 +1,9 @@
+spring:
+
+  datasource:
+    url: jdbc:h2:~/data/smartphone-portal
+    username: sa
+    password:
+
+    hikari:
+      maximum-pool-size: 10
